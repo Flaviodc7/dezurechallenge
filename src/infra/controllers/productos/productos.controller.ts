@@ -8,6 +8,7 @@ import {
   Put,
   HttpCode,
   HttpStatus,
+  Query,
 } from '@nestjs/common';
 import { CreateProductoDTO, UpdateProductoDTO } from '../../dtos/productos.dto';
 import { ProductosService } from '../../services/productos/productos.service';
@@ -45,5 +46,20 @@ export class ProductosController {
       delete: true,
       count: 1,
     };
+  }
+
+  @ApiOperation({ summary: 'Obtener productos filtrados y paginados' })
+  @Get()
+  @HttpCode(HttpStatus.OK)
+  async getProductos(
+    @Query('pagina') pagina: number = 1,
+    @Query('limite') limite: number = 10,
+    @Query('nombre') nombre?: string,
+    @Query('precioMinimo') precioMinimo?: number,
+    @Query('precioMaximo') precioMaximo?: number,
+    @Query('enStock') enStock?: boolean,
+  ) {
+    const productos = await this.productosService.findPaginatedAndFiltered(pagina, limite, nombre, precioMinimo, precioMaximo, enStock);
+    return productos;
   }
 }

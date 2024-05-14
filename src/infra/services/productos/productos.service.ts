@@ -30,4 +30,33 @@ export class ProductosService {
   delete(id: string) {
     return this.productoRepository.delete(id);
   }
+
+  async findPaginatedAndFiltered(pagina: number, limite: number, nombre?: string, precioMinimo?: number, precioMaximo?: number, enStock?: boolean) {
+    const queryBuilder = this.productoRepository.createQueryBuilder('producto');
+
+    if (nombre) {
+      queryBuilder.andWhere('producto.nombre LIKE :nombre', { nombre: `%${nombre}%` });
+    }
+    if (precioMinimo) {
+      queryBuilder.andWhere('producto.precio >= :precioMinimo', { precioMinimo });
+    }
+    if (precioMaximo) {
+      queryBuilder.andWhere('producto.precio <= :precioMaximo', { precioMaximo });
+    }
+    if (enStock !== undefined) {
+      queryBuilder.andWhere('producto.stock > 0 = :enStock', { enStock });
+    }
+
+    const [result, total] = await queryBuilder
+      .skip((pagina - 1) * limite)
+      .take(limite)
+      .getManyAndCount();
+
+    return {
+      data: result,
+      count: total,
+      totalPages: Math.ceil(total / limite),
+      currentPage: pagina,
+    };
+  }
 }
