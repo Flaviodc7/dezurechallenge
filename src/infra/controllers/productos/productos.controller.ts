@@ -59,7 +59,14 @@ export class ProductosController {
     @Query('precioMaximo') precioMaximo?: number,
     @Query('enStock') enStock?: boolean,
   ) {
-    const productos = await this.productosService.findPaginatedAndFiltered(pagina, limite, nombre, precioMinimo, precioMaximo, enStock);
+    const productos = await this.productosService.findPaginatedAndFiltered(
+      pagina,
+      limite,
+      nombre,
+      precioMinimo,
+      precioMaximo,
+      enStock,
+    );
     return productos;
   }
 }
