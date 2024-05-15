@@ -25,7 +25,12 @@ import { PromptsService } from './infra/services/prompts/prompts.service';
     }),
     DatabaseModule,
   ],
-  controllers: [AppController, UsuariosController, ProductosController, PromptsController],
+  controllers: [
+    AppController,
+    UsuariosController,
+    ProductosController,
+    PromptsController,
+  ],
   providers: [AppService, ProductosService, UsuariosService, PromptsService],
 })
 export class AppModule implements NestModule {
