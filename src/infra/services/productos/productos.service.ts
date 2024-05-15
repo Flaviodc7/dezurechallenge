@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm/dist';
 import { ProductoEntity } from '../../../core/modules/productos/domain/productos.entity';
+import { v4 as uuidv4 } from 'uuid';
 import { Repository } from 'typeorm';
 import { CreateProductoDTO, UpdateProductoDTO } from '../../dtos/productos.dto';
 
@@ -17,6 +18,7 @@ export class ProductosService {
 
   create(payload: CreateProductoDTO) {
     const newProduct = this.productoRepository.create(payload);
+    newProduct.id = uuidv4();
     return this.productoRepository.save(newProduct);
   }
 
