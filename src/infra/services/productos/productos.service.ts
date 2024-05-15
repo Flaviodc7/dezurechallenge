@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm/dist';
 import { ProductoEntity } from '../../../core/modules/productos/domain/productos.entity';
 import { v4 as uuidv4 } from 'uuid';
@@ -12,25 +16,57 @@ export class ProductosService {
     private productoRepository: Repository<ProductoEntity>,
   ) {}
 
-  findOne(id: string) {
-    return this.productoRepository.findOneBy({ id });
+  async findOne(id: string) {
+    try {
+      const producto = await this.productoRepository.findOneBy({ id });
+      if (!producto) {
+        throw new NotFoundException(`Producto con ID ${id} no encontrado`);
+      }
+      return producto;
+    } catch (error) {
+      throw new BadRequestException(
+        `Falla al buscar el producto: ${error.message}`,
+      );
+    }
   }
 
-  create(payload: CreateProductoDTO) {
-    const newProduct = this.productoRepository.create(payload);
-    newProduct.id = uuidv4();
-    return this.productoRepository.save(newProduct);
+  async create(payload: CreateProductoDTO) {
+    try {
+      const newProducto = this.productoRepository.create(payload);
+      newProducto.id = uuidv4();
+      return await this.productoRepository.save(newProducto);
+    } catch (error) {
+      throw new BadRequestException(
+        `Falla al intentar crear el producto: ${error.message}`,
+      );
+    }
   }
 
   async update(payload: UpdateProductoDTO) {
     const { id } = payload;
-    const producto = await this.findOne(id);
-    this.productoRepository.merge(producto, payload);
-    return this.productoRepository.save(producto);
+    try {
+      const producto = await this.findOne(id);
+      this.productoRepository.merge(producto, payload);
+      return await this.productoRepository.save(producto);
+    } catch (error) {
+      throw new BadRequestException(
+        `Falla al intentar actualizar el producto: ${error.message}`,
+      );
+    }
   }
 
-  delete(id: string) {
-    return this.productoRepository.delete(id);
+  async delete(id: string) {
+    try {
+      const result = await this.productoRepository.delete(id);
+      if (result.affected === 0) {
+        throw new NotFoundException(`Producto con ID ${id} no encontrado`);
+      }
+      return result;
+    } catch (error) {
+      throw new BadRequestException(
+        `Falla al intentar eliminar el producto: ${error.message}`,
+      );
+    }
   }
 
   async findPaginatedAndFiltered(
@@ -41,37 +77,44 @@ export class ProductosService {
     precioMaximo?: number,
     enStock?: boolean,
   ) {
-    const queryBuilder = this.productoRepository.createQueryBuilder('producto');
+    try {
+      const queryBuilder =
+        this.productoRepository.createQueryBuilder('producto');
 
-    if (nombre) {
-      queryBuilder.andWhere('producto.nombre LIKE :nombre', {
-        nombre: `%${nombre}%`,
-      });
-    }
-    if (precioMinimo) {
-      queryBuilder.andWhere('producto.precio >= :precioMinimo', {
-        precioMinimo,
-      });
-    }
-    if (precioMaximo) {
-      queryBuilder.andWhere('producto.precio <= :precioMaximo', {
-        precioMaximo,
-      });
-    }
-    if (enStock !== undefined) {
-      queryBuilder.andWhere('producto.stock > 0 = :enStock', { enStock });
-    }
+      if (nombre) {
+        queryBuilder.andWhere('producto.nombre LIKE :nombre', {
+          nombre: `%${nombre}%`,
+        });
+      }
+      if (precioMinimo) {
+        queryBuilder.andWhere('producto.precio >= :precioMinimo', {
+          precioMinimo,
+        });
+      }
+      if (precioMaximo) {
+        queryBuilder.andWhere('producto.precio <= :precioMaximo', {
+          precioMaximo,
+        });
+      }
+      if (enStock !== undefined) {
+        queryBuilder.andWhere('producto.stock > 0 = :enStock', { enStock });
+      }
 
-    const [result, total] = await queryBuilder
-      .skip((pagina - 1) * limite)
-      .take(limite)
-      .getManyAndCount();
+      const [result, total] = await queryBuilder
+        .skip((pagina - 1) * limite)
+        .take(limite)
+        .getManyAndCount();
 
-    return {
-      data: result,
-      count: total,
-      totalPages: Math.ceil(total / limite),
-      currentPage: pagina,
-    };
+      return {
+        data: result,
+        count: total,
+        totalPages: Math.ceil(total / limite),
+        currentPage: pagina,
+      };
+    } catch (error) {
+      throw new BadRequestException(
+        `Falla al intentar obtener productos: ${error.message}`,
+      );
+    }
   }
 }
