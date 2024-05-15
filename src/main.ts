@@ -26,16 +26,18 @@ async function bootstrap() {
             name: 'Authorization',
             description: '',
           },
-          value: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnZW5lcmFsX2VtYWlsIjoiYWRtaW5AYWRtaW4uY29tIn0.TCHl5_VMibulVgLk7fF4BzVC02MzirULLZDjPb8B9pQ'
-        }
+          value:
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnZW5lcmFsX2VtYWlsIjoiYWRtaW5AYWRtaW4uY29tIn0.TCHl5_VMibulVgLk7fF4BzVC02MzirULLZDjPb8B9pQ',
+        },
       },
-      requestInterceptor: (req: { headers: { [x: string]: string; }; }) => {
-        req.headers['Authorization'] = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnZW5lcmFsX2VtYWlsIjoiYWRtaW5AYWRtaW4uY29tIn0.TCHl5_VMibulVgLk7fF4BzVC02MzirULLZDjPb8B9pQ';
+      requestInterceptor: (req: { headers: { [x: string]: string } }) => {
+        req.headers['Authorization'] =
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnZW5lcmFsX2VtYWlsIjoiYWRtaW5AYWRtaW4uY29tIn0.TCHl5_VMibulVgLk7fF4BzVC02MzirULLZDjPb8B9pQ';
         return req;
-      }
-    }
+      },
+    },
   });
-  
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,

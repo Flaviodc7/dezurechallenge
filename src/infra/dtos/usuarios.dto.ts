@@ -2,7 +2,9 @@ import { IsNotEmpty, IsString, IsOptional } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateUsuarioDTO {
-  @ApiProperty({ description: 'ID del usuario (puede ser DNI u otra documentación' })
+  @ApiProperty({
+    description: 'ID del usuario (puede ser DNI u otra documentación)',
+  })
   @IsString()
   @IsNotEmpty()
   readonly id: string;
