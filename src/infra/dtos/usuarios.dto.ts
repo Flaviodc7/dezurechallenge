@@ -27,16 +27,19 @@ export class UpdateUsuarioDTO {
   @IsString()
   @IsNotEmpty()
   readonly id: string;
-  @ApiProperty({ description: 'Nombre del usuario (opcional)' })
+  @ApiProperty({
+    description: 'Nombre del usuario (opcional)',
+    required: false,
+  })
   @IsOptional()
   @IsString()
-  readonly nombre: string;
-  @ApiProperty({ description: 'Email del usuario (opcional)' })
+  readonly nombre?: string;
+  @ApiProperty({ description: 'Email del usuario (opcional)', required: false })
   @IsOptional()
   @IsString()
-  readonly email: string;
-  @ApiProperty({ description: 'Rol del usuario (opcional)' })
+  readonly email?: string;
+  @ApiProperty({ description: 'Rol del usuario (opcional)', required: false })
   @IsOptional()
   @IsString()
-  readonly rol: string;
+  readonly rol?: string;
 }

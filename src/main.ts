@@ -8,7 +8,9 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Dezure Challenge')
-    .setDescription('Documentación para la API de productos, usuarios y prompts')
+    .setDescription(
+      'Documentación para la API de productos, usuarios y prompts',
+    )
     .setVersion('1.0')
     .addBearerAuth()
     .build();

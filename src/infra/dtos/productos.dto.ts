@@ -39,28 +39,46 @@ export class UpdateProductoDTO {
   @IsString()
   @IsNotEmpty()
   readonly id: string;
-  @ApiProperty({ description: 'Nombre del producto (opcional)' })
+  @ApiProperty({
+    description: 'Nombre del producto (opcional)',
+    required: false,
+  })
   @IsOptional()
   @IsString()
-  readonly nombre: string;
-  @ApiProperty({ description: 'Descripción del producto (opcional)' })
+  readonly nombre?: string;
+  @ApiProperty({
+    description: 'Descripción del producto (opcional)',
+    required: false,
+  })
   @IsOptional()
   @IsString()
-  readonly descripcion: string;
-  @ApiProperty({ description: 'Precio del producto (opcional)' })
+  readonly descripcion?: string;
+  @ApiProperty({
+    description: 'Precio del producto (opcional)',
+    required: false,
+  })
   @IsOptional()
   @IsNumber()
-  readonly precio: number;
-  @ApiProperty({ description: 'Stock del producto (opcional)' })
+  readonly precio?: number;
+  @ApiProperty({
+    description: 'Stock del producto (opcional)',
+    required: false,
+  })
   @IsOptional()
   @IsNumber()
-  readonly stock: number;
-  @ApiProperty({ description: 'Origen del producto (opcional)' })
+  readonly stock?: number;
+  @ApiProperty({
+    description: 'Origen del producto (opcional)',
+    required: false,
+  })
   @IsOptional()
   @IsString()
-  readonly origen: string;
-  @ApiProperty({ description: 'Imagen del producto (opcional)' })
+  readonly origen?: string;
+  @ApiProperty({
+    description: 'Imagen del producto (opcional)',
+    required: false,
+  })
   @IsOptional()
   @IsUrl()
-  readonly imagen: string;
+  readonly imagen?: string;
 }
