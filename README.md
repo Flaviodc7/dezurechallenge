@@ -2,6 +2,57 @@
 
 Este proyecto es una aplicación de ejemplo para el desafío técnico Dezure.
 
+## Enunciado original
+
+```bash
+Backend Developer Challenge
+
+
+Queremos conocerte mejor!!! 
+
+¿Qué buscamos? 
+
+- Una oportunidad de que compartas eso que sabés hacer mejor. Programar. Que puedas a través de este ejercicio presentarte con tu trabajo y demostrar las ganas que tienes de ser parte. 
+
+
+
+¿Qué valoraremos?
+
+- Uso de node.js / Nest.js / Typescript 
+- Uso de middlewares, jwt. 
+- Uso de postgresql, models. Uso de relaciones y scopes. ORM. 
+- Buenas prácticas: KISS, DRY, SOLID. Organización del código. Arquitectura de software 
+
+
+Consigna:
+1. Crear una API REST que comprenda las siguientes funcionalidades: 
+
+- Implementar autenticación utilizando JWT. 
+- Un endpoint para gestionar usuarios (crear, actualizar, eliminar). 
+- Un endpoint para gestionar productos (crear, actualizar, eliminar). 
+- Un endpoint para listar todos los productos. Implementar paginación y filtros en el endpoint de listado de productos. 
+- Implementar manejo de errores y validación de datos en los endpoints. 
+- Implementar Swagger como herramienta para probar la funcionalidad de los endpoints y facilitar la documentación del proyecto
+- Agregar un endpoint para realizar consultas a ChatGPT mediante el uso de Langchain, su objetivo debe ser fruto de tu imaginación. 
+
+
+2. Responder las siguientes preguntas y añadirlas al README como parte de la documentación: 
+
+- ¿Qué es un middleware y cuál es su utilidad en una aplicación backend? 
+- ¿Qué es SQL Injection y cómo puede evitarse? 
+- ¿Cuándo es conveniente utilizar SQL Transactions? Dar un ejemplo. 
+- Usando async/await: ¿cómo se puede aprovechar el paralelismo? 
+
+
+
+
+Entrega: 
+
+- Un repositorio en GitHub con el desarrollo, incluyendo instrucciones claras para su ejecución (README). 
+- Puedes proporcionar un entorno en línea para demostrar el proyecto funcionando, como Heroku o similar, si es posible. 
+- Plazo: 4 días.
+```
+
 ## Requisitos Previos
 
 - Docker
@@ -43,7 +94,31 @@ Nota: la OPENAI_API_KEY proporcionada no funciona porque no tengo un plan de pag
 docker-compose up
 ```
 
-## Uso
+## Autenticación
+Este proyecto utiliza JSON Web Tokens (JWT) para el manejo seguro de rutas. Es importante incluir información específica del usuario dentro del token para ciertas operaciones.
+
+### Enviando el Token de Autorización
+Al hacer solicitudes a rutas protegidas, debes incluir un encabezado de Autorización con un JWT. Este token debe incluir una reclamación general_email, que es utilizada por el middleware para extraer el correo electrónico del usuario para su posterior procesamiento.
+
+Ejemplo de un payload de JWT con `general_email`:
+
+```json
+{
+  "general_email": "user@example.com",
+}
+```
+
+Para enviar el token en una solicitud, agrégalo al encabezado de Autorización de la siguiente manera:
+
+```json
+Authorization: Bearer your_jwt_token_here
+```
+
+Asegúrate de que tu JWT esté correctamente firmado e incluya el valor `general_email` para evitar recibir respuestas `401 Unauthorized` o 403 `Forbidden` del servidor.
+
+Nota: para el uso de pruebas dentro de Swagger el mismo ya tiene inyectado uno provisorio, por lo cual no es necesario añadirlo.
 
 ## Documentación de API:
+
+Aquí se proporciona la documentación de la API:
 
