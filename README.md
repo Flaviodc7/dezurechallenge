@@ -103,11 +103,14 @@ Nota: la OPENAI_API_KEY proporcionada no funciona porque no tengo un plan de pag
 docker-compose up
 ```
 
+5. Se pueden realizar pruebas dentro de Swagger, el mismo ya tiene inyectado un JWT provisorio, por lo cual no es necesario añadirlo.
+
+
 ## Autenticación
 Este proyecto utiliza JSON Web Tokens (JWT) para el manejo seguro de rutas. Es importante incluir información específica del usuario dentro del token para ciertas operaciones.
 
 ### Enviando el Token de Autorización
-Al hacer solicitudes a rutas protegidas, debes incluir un encabezado de Autorización con un JWT. Este token debe incluir un campo general_email, que es utilizado por el middleware para extraer el correo electrónico del usuario para su posterior procesamiento.
+Al hacer solicitudes a rutas protegidas, debes incluir un Header de Autorización con un JWT. Este token debe incluir un campo general_email, que es utilizado por el middleware para extraer el correo electrónico del usuario para su posterior procesamiento.
 
 Ejemplo de un payload de JWT con `general_email`:
 
@@ -123,9 +126,7 @@ Para enviar el token en una solicitud, agrégalo al encabezado de Authorization 
 Authorization: Bearer your_jwt_token_here
 ```
 
-Asegúrate de que tu JWT esté correctamente firmado e incluya el valor `general_email` para evitar recibir respuestas `401 Unauthorized` o 403 `Forbidden` del servidor.
-
-Nota: para el uso de pruebas dentro de Swagger el mismo ya tiene inyectado uno provisorio, por lo cual no es necesario añadirlo.
+Asegúrate de que tu JWT esté correctamente firmado e incluya el valor `general_email` para evitar recibir respuestas `401 Unauthorized` o `403 Forbidden` del servidor.
 
 ## Endpoints (si bien aquí los detallo, se pueden ver también usando Swagger en /docs):
 
