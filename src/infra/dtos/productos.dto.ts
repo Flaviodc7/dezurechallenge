@@ -6,7 +6,7 @@ import {
   IsOptional,
   Min,
   IsInt,
-  IsBoolean
+  IsBoolean,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
@@ -25,7 +25,9 @@ export class CreateProductoDTO {
   @IsNotEmpty()
   @Min(0, { message: 'El precio no puede ser un número negativo' })
   readonly precio: number;
-  @ApiProperty({ description: 'Stock del producto (Solo números enteros y positivos)' })
+  @ApiProperty({
+    description: 'Stock del producto (Solo números enteros y positivos)',
+  })
   @IsInt({ message: 'El stock debe ser un número entero' })
   @Min(0, { message: 'El stock no puede ser un número negativo' })
   @IsNotEmpty()
@@ -68,7 +70,8 @@ export class UpdateProductoDTO {
   @Min(0, { message: 'El precio no puede ser un número negativo' })
   readonly precio?: number;
   @ApiProperty({
-    description: 'Stock del producto (Solo números enteros y positivos) (opcional)',
+    description:
+      'Stock del producto (Solo números enteros y positivos) (opcional)',
     required: false,
   })
   @IsInt({ message: 'El stock debe ser un número entero' })

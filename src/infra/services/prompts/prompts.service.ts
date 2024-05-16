@@ -1,4 +1,9 @@
-import { HttpException, HttpStatus, Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { SendPromptDTO } from 'src/infra/dtos/prompts.dto';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
 import { ChatOpenAI } from '@langchain/openai';
@@ -27,9 +32,14 @@ export class PromptsService {
       return res;
     } catch (error) {
       if (error.response && error.response.status === 429) {
-        throw new HttpException('Cuota excedida. Por favor, verifica el uso de la API y detalles de facturación.', HttpStatus.TOO_MANY_REQUESTS);
+        throw new HttpException(
+          'Cuota excedida. Por favor, verifica el uso de la API y detalles de facturación.',
+          HttpStatus.TOO_MANY_REQUESTS,
+        );
       }
-      throw new InternalServerErrorException('Falla al intentar procesar el prompt: ');
+      throw new InternalServerErrorException(
+        'Falla al intentar procesar el prompt: ',
+      );
     }
   }
 }

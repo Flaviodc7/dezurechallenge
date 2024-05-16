@@ -12,7 +12,11 @@ import {
   ValidationPipe,
   UsePipes,
 } from '@nestjs/common';
-import { CreateProductoDTO, GetProductosDto, UpdateProductoDTO } from '../../dtos/productos.dto';
+import {
+  CreateProductoDTO,
+  GetProductosDto,
+  UpdateProductoDTO,
+} from '../../dtos/productos.dto';
 import { ProductosService } from '../../services/productos/productos.service';
 import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 
@@ -51,12 +55,44 @@ export class ProductosController {
   }
 
   @ApiOperation({ summary: 'Obtener productos filtrados y paginados' })
-  @ApiQuery({ name: 'pagina', required: false, description: 'Número de página (Opcional, debe ser mayor a 0) Valor Default = 1', type: Number })
-  @ApiQuery({ name: 'limite', required: false, description: 'Número de productos por página (Opcional, debe ser mayor a 0) Valor Default = 10', type: Number })
-  @ApiQuery({ name: 'nombre', required: false, description: 'Nombre del producto (Opcional)', type: String })
-  @ApiQuery({ name: 'precioMinimo', required: false, description: 'Precio mínimo (Opcional, debe ser mayor a 0)', type: Number })
-  @ApiQuery({ name: 'precioMaximo', required: false, description: 'Precio máximo (Opcional, debe ser mayor a 0)', type: Number })
-  @ApiQuery({ name: 'enStock', required: false, description: 'Si el producto está en stock (Opcional)', type: Boolean })
+  @ApiQuery({
+    name: 'pagina',
+    required: false,
+    description:
+      'Número de página (Opcional, debe ser mayor a 0) Valor Default = 1',
+    type: Number,
+  })
+  @ApiQuery({
+    name: 'limite',
+    required: false,
+    description:
+      'Número de productos por página (Opcional, debe ser mayor a 0) Valor Default = 10',
+    type: Number,
+  })
+  @ApiQuery({
+    name: 'nombre',
+    required: false,
+    description: 'Nombre del producto (Opcional)',
+    type: String,
+  })
+  @ApiQuery({
+    name: 'precioMinimo',
+    required: false,
+    description: 'Precio mínimo (Opcional, debe ser mayor a 0)',
+    type: Number,
+  })
+  @ApiQuery({
+    name: 'precioMaximo',
+    required: false,
+    description: 'Precio máximo (Opcional, debe ser mayor a 0)',
+    type: Number,
+  })
+  @ApiQuery({
+    name: 'enStock',
+    required: false,
+    description: 'Si el producto está en stock (Opcional)',
+    type: Boolean,
+  })
   @Get()
   @HttpCode(HttpStatus.OK)
   @UsePipes(new ValidationPipe({ transform: true }))
