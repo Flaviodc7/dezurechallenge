@@ -5,7 +5,6 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm/dist';
 import { ProductoEntity } from '../../../core/modules/productos/domain/productos.entity';
-import { v4 as uuidv4 } from 'uuid';
 import { Repository } from 'typeorm';
 import { CreateProductoDTO, UpdateProductoDTO } from '../../dtos/productos.dto';
 
@@ -33,7 +32,6 @@ export class ProductosService {
   async create(payload: CreateProductoDTO) {
     try {
       const newProducto = this.productoRepository.create(payload);
-      newProducto.id = uuidv4();
       return await this.productoRepository.save(newProducto);
     } catch (error) {
       throw new BadRequestException(

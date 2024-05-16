@@ -8,7 +8,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Dezure Challenge')
-    .setDescription('Documentación para la API de productos y usuarios')
+    .setDescription('Documentación para la API de productos, usuarios y prompts')
     .setVersion('1.0')
     .addBearerAuth()
     .build();
@@ -44,6 +44,6 @@ async function bootstrap() {
     }),
   );
 
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
