@@ -5,9 +5,11 @@ import {
   IsUrl,
   IsOptional,
   Min,
-  IsInt
+  IsInt,
+  IsBoolean
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 
 export class CreateProductoDTO {
   @ApiProperty({ description: 'Nombre del producto' })
@@ -87,4 +89,38 @@ export class UpdateProductoDTO {
   @IsOptional()
   @IsUrl()
   readonly imagen?: string;
+}
+
+export class GetProductosDto {
+  @IsOptional()
+  @IsInt()
+  @Min(1, { message: 'El número de página debe ser al menos 1' })
+  @Type(() => Number)
+  pagina?: number = 1;
+
+  @IsOptional()
+  @IsInt()
+  @Min(1, { message: 'El limite debe ser al menos 1' })
+  @Type(() => Number)
+  limite?: number = 10;
+
+  @IsOptional()
+  @IsString()
+  nombre?: string;
+
+  @IsOptional()
+  @IsInt()
+  @Min(0, { message: 'El precio mínimo no puede ser negativo' })
+  @Type(() => Number)
+  precioMinimo?: number;
+
+  @IsOptional()
+  @IsInt()
+  @Min(0, { message: 'El precio máximo no puede ser negativo' })
+  @Type(() => Number)
+  precioMaximo?: number;
+
+  @IsOptional()
+  @IsBoolean()
+  enStock?: boolean;
 }

@@ -9,8 +9,10 @@ import {
   HttpCode,
   HttpStatus,
   Query,
+  ValidationPipe,
+  UsePipes,
 } from '@nestjs/common';
-import { CreateProductoDTO, UpdateProductoDTO } from '../../dtos/productos.dto';
+import { CreateProductoDTO, GetProductosDto, UpdateProductoDTO } from '../../dtos/productos.dto';
 import { ProductosService } from '../../services/productos/productos.service';
 import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 
@@ -49,29 +51,23 @@ export class ProductosController {
   }
 
   @ApiOperation({ summary: 'Obtener productos filtrados y paginados' })
-  @ApiQuery({ name: 'pagina', required: false, description: 'Número de página (Opcional) Valor Default = 1', type: Number })
-  @ApiQuery({ name: 'limite', required: false, description: 'Número de productos por página (Opcional) Valor Default = 10', type: Number })
+  @ApiQuery({ name: 'pagina', required: false, description: 'Número de página (Opcional, debe ser mayor a 0) Valor Default = 1', type: Number })
+  @ApiQuery({ name: 'limite', required: false, description: 'Número de productos por página (Opcional, debe ser mayor a 0) Valor Default = 10', type: Number })
   @ApiQuery({ name: 'nombre', required: false, description: 'Nombre del producto (Opcional)', type: String })
-  @ApiQuery({ name: 'precioMinimo', required: false, description: 'Precio mínimo (Opcional)', type: Number })
-  @ApiQuery({ name: 'precioMaximo', required: false, description: 'Precio máximo (Opcional)', type: Number })
+  @ApiQuery({ name: 'precioMinimo', required: false, description: 'Precio mínimo (Opcional, debe ser mayor a 0)', type: Number })
+  @ApiQuery({ name: 'precioMaximo', required: false, description: 'Precio máximo (Opcional, debe ser mayor a 0)', type: Number })
   @ApiQuery({ name: 'enStock', required: false, description: 'Si el producto está en stock (Opcional)', type: Boolean })
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getProductos(
-    @Query('pagina') pagina: number = 1,
-    @Query('limite') limite: number = 10,
-    @Query('nombre') nombre?: string,
-    @Query('precioMinimo') precioMinimo?: number,
-    @Query('precioMaximo') precioMaximo?: number,
-    @Query('enStock') enStock?: boolean,
-  ) {
+  @UsePipes(new ValidationPipe({ transform: true }))
+  async getProductos(@Query() query: GetProductosDto) {
     const productos = await this.productosService.findPaginatedAndFiltered(
-      pagina,
-      limite,
-      nombre,
-      precioMinimo,
-      precioMaximo,
-      enStock,
+      query.pagina,
+      query.limite,
+      query.nombre,
+      query.precioMinimo,
+      query.precioMaximo,
+      query.enStock,
     );
     return productos;
   }

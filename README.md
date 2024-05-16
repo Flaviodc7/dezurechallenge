@@ -57,6 +57,8 @@ Entrega:
 
 - Docker
 - Docker Compose
+- Node.js
+- NPM
 
 ## Instalación y Ejecución
 
@@ -81,7 +83,7 @@ POSTGRES_DB=dezurechallenge
 POSTGRES_USER=admin
 POSTGRES_PASSWORD=Admin7*
 POSTGRES_PORT=5432
-POSTGRES_HOST=postgres
+POSTGRES_HOST=postgres # en caso de correrlo sin utilizar "docker-compose up", y con la db de Postgres levantada, se debe utilizar el valor "localhost"
 PORT=3000
 OPENAI_API_KEY=sk-proj-ZTb1DG8D22ru5KoX0i8KT3BlbkFJJUPp1YHDH7Wi3AmYnpjs
 ```
@@ -98,7 +100,7 @@ docker-compose up
 Este proyecto utiliza JSON Web Tokens (JWT) para el manejo seguro de rutas. Es importante incluir información específica del usuario dentro del token para ciertas operaciones.
 
 ### Enviando el Token de Autorización
-Al hacer solicitudes a rutas protegidas, debes incluir un encabezado de Autorización con un JWT. Este token debe incluir una reclamación general_email, que es utilizada por el middleware para extraer el correo electrónico del usuario para su posterior procesamiento.
+Al hacer solicitudes a rutas protegidas, debes incluir un encabezado de Autorización con un JWT. Este token debe incluir un campo general_email, que es utilizado por el middleware para extraer el correo electrónico del usuario para su posterior procesamiento.
 
 Ejemplo de un payload de JWT con `general_email`:
 
@@ -108,7 +110,7 @@ Ejemplo de un payload de JWT con `general_email`:
 }
 ```
 
-Para enviar el token en una solicitud, agrégalo al encabezado de Autorización de la siguiente manera:
+Para enviar el token en una solicitud, agrégalo al encabezado de Authorization de la siguiente manera:
 
 ```json
 Authorization: Bearer your_jwt_token_here
@@ -122,3 +124,69 @@ Nota: para el uso de pruebas dentro de Swagger el mismo ya tiene inyectado uno p
 
 Aquí se proporciona la documentación de la API:
 
+### Productos
+
+#### Crear un producto
+
+Crea un producto
+
+```sh
+POST /productos
+```
+
+##### Request body
+```json
+{
+  "nombre": "string",
+  "descripcion": "string",
+  "precio": 1200, // solo acepta números positivos,
+  "stock": 3, // solo acepta números positivos y enteros
+  "origen": "string",
+  "imagen": "https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_640.jpg" // solo acepta imagenes en formato URL
+}
+```
+
+#### Obtener un producto por ID
+
+Obtiene un producto por `ID`
+
+```sh
+GET /productos/:idProducto
+```
+
+#### Modificar un producto
+
+Modifica un producto
+
+```sh
+PUT /productos
+```
+
+##### Request body
+```json
+{
+  "id": "string", // requerido
+  "nombre": "string", // opcional
+  "descripcion": "string", // opcional
+  "precio": 1200, // solo acepta números positivos (opcional),
+  "stock": 3, // solo acepta números positivos y enteros (opcional)
+  "origen": "string", // opcional
+  "imagen": "https://cdn.pixabay.com/photo/2024/02/26/19/39/monochrome-image-8598798_640.jpg" // solo acepta imagenes en formato URL (opcional)
+}
+```
+
+#### Eliminar un producto
+
+Elimina un producto
+
+```sh
+DELETE /productos/:idProducto
+```
+
+#### Obtener productos filtrados y paginados
+
+Filtra los productos existentes según los parametros que se agreguen, todos son opcionales, aunque hay valores por default, 
+
+```sh
+DELETE /productos/:idProducto
+```
