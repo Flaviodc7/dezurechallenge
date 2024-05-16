@@ -95,7 +95,7 @@ export class ProductosService {
         });
       }
       if (enStock !== undefined) {
-        if (enStock) {
+        if (enStock.toString() === "true") {
           queryBuilder.andWhere('producto.stock > 0');
         } else {
           queryBuilder.andWhere('producto.stock = 0');
