@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { CreateProductoDTO, UpdateProductoDTO } from '../../dtos/productos.dto';
 import { ProductosService } from '../../services/productos/productos.service';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Productos')
 @Controller('productos')
@@ -49,6 +49,12 @@ export class ProductosController {
   }
 
   @ApiOperation({ summary: 'Obtener productos filtrados y paginados' })
+  @ApiQuery({ name: 'pagina', required: false, description: 'Número de página', type: Number })
+  @ApiQuery({ name: 'limite', required: false, description: 'Número de productos por página', type: Number })
+  @ApiQuery({ name: 'nombre', required: false, description: 'Nombre del producto', type: String })
+  @ApiQuery({ name: 'precioMinimo', required: false, description: 'Precio mínimo', type: Number })
+  @ApiQuery({ name: 'precioMaximo', required: false, description: 'Precio máximo', type: Number })
+  @ApiQuery({ name: 'enStock', required: false, description: 'Si el producto está en stock', type: Boolean })
   @Get()
   @HttpCode(HttpStatus.OK)
   async getProductos(

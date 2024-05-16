@@ -95,7 +95,11 @@ export class ProductosService {
         });
       }
       if (enStock !== undefined) {
-        queryBuilder.andWhere('producto.stock > 0 = :enStock', { enStock });
+        if (enStock) {
+          queryBuilder.andWhere('producto.stock > 0');
+        } else {
+          queryBuilder.andWhere('producto.stock = 0');
+        }
       }
 
       const [result, total] = await queryBuilder
