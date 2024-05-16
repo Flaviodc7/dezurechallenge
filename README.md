@@ -4,12 +4,14 @@ Este proyecto es una aplicación de ejemplo para el desafío técnico Dezure.
 
 ## Enunciado original
 
-```bash
 Fecha de publicación: 13/05/2024
 
 Link:
+```bash
 https://www.linkedin.com/jobs/view/3921116417/?refId=665cfcfd-9fd4-4a0e-93a6-0a75fd9be107&trackingId=WOg%2B1TJlRluMkSiXckAfNw%3D%3D
+```
 
+```bash
 Backend Developer Challenge
 
 
@@ -214,8 +216,16 @@ POST /usuarios
   "id": "string",
   "nombre": "string",
   "email": "string",
-  "rol": "string
+  "rol": "string"
 }
+```
+
+#### Obtener todos los usuarios
+
+Obtiene todos los usuarios
+
+```sh
+GET /usuarios
 ```
 
 #### Obtener un usuario por ID
@@ -248,6 +258,25 @@ PUT /usuarios
   "id": "string", // requerido
   "nombre": "string", // opcional
   "email": "string", // opcional
-  "rol": "string // opcional
+  "rol": "string" // opcional
+}
+```
+
+### Prompt Langchain
+
+#### Enviar Prompt a ChatGPT mediante Langchain
+
+Envía un prompt a ChatGPT
+
+Esta funcionalidad no la he probado adecuadamente, por un lado por la falta de una API KEY de OpenAI, y por otro lado porque no supe bien que funcionalidad ponerle, aunque dejé algo sencillo para que ChatGPT responda de forma graciosa.
+
+```sh
+POST /prompts
+```
+
+##### Request body
+```json
+{
+  "prompt": "string",
 }
 ```

@@ -25,6 +25,12 @@ export class UsuariosController {
     return this.usuariosService.findOne(idUsuario);
   }
 
+  @ApiOperation({ summary: 'Obtener todos los usuarios' })
+  @Get()
+  getUsuarios() {
+    return this.usuariosService.findAll();
+  }
+
   @ApiOperation({ summary: 'Crear un usuario' })
   @Post()
   create(@Body() payload: CreateUsuarioDTO) {

@@ -29,6 +29,16 @@ export class UsuariosService {
     }
   }
 
+  findAll() {
+    try {
+      return this.usuarioRepository.find();
+    } catch (error) {
+      throw new BadRequestException(
+        `Falla al intentar obtener los usuarios: ${error.message}`,
+      );
+    }
+  }
+
   async create(payload: CreateUsuarioDTO) {
     try {
       const newUsuario = this.usuarioRepository.create(payload);
