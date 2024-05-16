@@ -5,6 +5,11 @@ Este proyecto es una aplicación de ejemplo para el desafío técnico Dezure.
 ## Enunciado original
 
 ```bash
+Fecha de publicación: 13/05/2024
+
+Link:
+https://www.linkedin.com/jobs/view/3921116417/?refId=665cfcfd-9fd4-4a0e-93a6-0a75fd9be107&trackingId=WOg%2B1TJlRluMkSiXckAfNw%3D%3D
+
 Backend Developer Challenge
 
 
@@ -188,5 +193,61 @@ DELETE /productos/:idProducto
 Filtra los productos existentes según los parametros que se agreguen, todos son opcionales, aunque hay valores por default, 
 
 ```sh
-DELETE /productos/:idProducto
+GET /productos?pagina=1&limite=2&nombre=valor&precioMinimo=1&precioMaximo=500&enStock=true
+```
+
+Todos los valores son opcionales, por default `pagina` es 1 y `limite` es 10. Para `pagina`, `limite`, `precioMinimo` y `precioMaximo` solo se pueden ingresar valores de tipo number y no se pueden ingresar números negativos. `nombre` es un valor string y `enStock` de tipo boolean
+
+### Usuarios
+
+#### Crear un usuario
+
+Crea un usuario
+
+```sh
+POST /usuarios
+```
+
+##### Request body
+```json
+{
+  "id": "string",
+  "nombre": "string",
+  "email": "string",
+  "rol": "string
+}
+```
+
+#### Obtener un usuario por ID
+
+Obtiene un usuario por `ID`
+
+```sh
+GET /usuarios/:idUsuario
+```
+
+#### Eliminar un usuario
+
+Elimina un usuario
+
+```sh
+DELETE /usuarios/:idUsuario
+```
+
+#### Modificar un usuario
+
+Modifica un usuario
+
+```sh
+PUT /usuarios
+```
+
+##### Request body
+```json
+{
+  "id": "string", // requerido
+  "nombre": "string", // opcional
+  "email": "string", // opcional
+  "rol": "string // opcional
+}
 ```
