@@ -127,9 +127,9 @@ Asegúrate de que tu JWT esté correctamente firmado e incluya el valor `general
 
 Nota: para el uso de pruebas dentro de Swagger el mismo ya tiene inyectado uno provisorio, por lo cual no es necesario añadirlo.
 
-## Documentación de API:
+## Endpoints:
 
-Aquí se proporciona la documentación de la API:
+Estos son los endpoints de la API:
 
 ### Productos
 
@@ -280,3 +280,19 @@ POST /prompts
   "prompt": "string",
 }
 ```
+
+## Respuestas a las preguntas
+
+Estos son los respuestas a las preguntas realizadas:
+
+### ¿Qué es un middleware y cuál es su utilidad en una aplicación backend?
+En palabras sencillas, un middleware aplicado al Backend son funcionalidades que se aplican sobre un Request previo a realizar la acción final deseada, puede ser para verificación de datos, manejo de errores en el body u otro tipo de uso. Por ejemplo, en el caso de este challenge se utilizan DTO's que sirven como verificación de los datos enviados en el Body y los params del Request, por un lado para verificar los datos y por el otro para verificar mediante el uso de JWT que el Token sea válido, esto puede servir para propositos de autenticación, como bien indica el nombre dentro de la aplicación.
+
+
+### ¿Qué es SQL Injection y cómo puede evitarse?
+El SQL Injection es (como bien dice el nombre), una inyección para utilizar información dentro de una base de datos, generalmente con fines maliciosos, como realizar queries que terminen siendo perjudiciales, resultando en el robo de datos o incluso en el borrado de los mismos. Para evitar tal cosa, en este caso se utiliza TypeORM que previene la inyección de este código en base de datos, ya que brinda encapsulamiento para los métodos utilizados.
+
+### ¿Cuándo es conveniente utilizar SQL Transactions? Dar un ejemplo.
+
+
+### Usando async/await: ¿cómo se puede aprovechar el paralelismo?
