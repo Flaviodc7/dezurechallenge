@@ -127,7 +127,7 @@ Asegúrate de que tu JWT esté correctamente firmado e incluya el valor `general
 
 Nota: para el uso de pruebas dentro de Swagger el mismo ya tiene inyectado uno provisorio, por lo cual no es necesario añadirlo.
 
-## Endpoints:
+## Endpoints (si bien aquí los detallo, se pueden ver también usando Swagger en /docs):
 
 Estos son los endpoints de la API:
 
@@ -293,6 +293,8 @@ En palabras sencillas, un middleware aplicado al Backend son funcionalidades que
 El SQL Injection es (como bien dice el nombre), una inyección para utilizar información dentro de una base de datos, generalmente con fines maliciosos, como realizar queries que terminen siendo perjudiciales, resultando en el robo de datos o incluso en el borrado de los mismos. Para evitar tal cosa, en este caso se utiliza TypeORM que previene la inyección de este código en base de datos, ya que brinda encapsulamiento para los métodos utilizados.
 
 ### ¿Cuándo es conveniente utilizar SQL Transactions? Dar un ejemplo.
+No me ha tocado utilizarlo en mi caso, pero por lo que tengo entendido son una serie de operaciones en base de datos que se ejecutan de forma paralela que tienen relación entre si mediante un único proceso, es útil para mantener el ACID (Atomicidad, Consistencia, Aislamiento y Durabilidad). Principalmente si alguno de los procesos falla se revierte el general. Por ejemplo, si se realiza una transacción de dinero y en el proceso una de las partes tiene alguna falla (el emisor o el receptor), se revierte el proceso para evitar inconsistencias, en ese caso con los montos, ya que se duplicaría el saldo teniendo en cuenta que exista acreditado en ambas cuentas.
 
 
 ### Usando async/await: ¿cómo se puede aprovechar el paralelismo?
+Me ha tocado utilizar esto pero no para cuestiones relacionadas a bases de datos relacionales. Aunque si por ejemplo he llevado a cabo un proyecto de web scraping que mediante el uso del Promise.all, corría 3 procesos asincronos de forma paralela para hacer web scraping de diferentes retailers. En principio intuyo que el principio es el mismo, pero al finalizar los procesos se verifica que todos hayan finalizado satisfactoriamente para dar lugar o no a un rollback.
