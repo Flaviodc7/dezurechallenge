@@ -103,7 +103,7 @@ Nota: la OPENAI_API_KEY proporcionada no funciona porque no tengo un plan de pag
 docker-compose up
 ```
 
-5. Se pueden realizar pruebas dentro de Swagger, el mismo ya tiene inyectado un JWT provisorio, por lo cual no es necesario añadirlo.
+5. Se pueden realizar pruebas dentro de Swagger, el mismo ya tiene inyectado un JWT provisorio, por lo cual no es necesario añadirlo, el mismo se encuentra en la ruta `/docs`. 
 
 
 ## Autenticación
@@ -128,9 +128,9 @@ Authorization: Bearer your_jwt_token_here
 
 Asegúrate de que tu JWT esté correctamente firmado e incluya el valor `general_email` para evitar recibir respuestas `401 Unauthorized` o `403 Forbidden` del servidor.
 
-## Endpoints (si bien aquí los detallo, se pueden ver también usando Swagger en /docs):
+## Endpoints
 
-Estos son los endpoints de la API:
+Estos son los endpoints de la API (si bien aquí los detallo, se pueden ver también usando Swagger en `/docs`):
 
 ### Productos
 
